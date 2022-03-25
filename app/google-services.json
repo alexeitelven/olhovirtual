@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "770477229707",
+    "project_id": "olhovirtual-622b4",
+    "storage_bucket": "olhovirtual-622b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770477229707:android:24c81f263a162b59f1368e",
+        "android_client_info": {
+          "package_name": "com.example.olhovirtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770477229707-mp3vrr2o77rhu10v0m9va5bf6rsfgm54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.olhovirtual",
+            "certificate_hash": "442740de27f06ddfbf2ebb33ad2e0604e4e38464"
+          }
+        },
+        {
+          "client_id": "770477229707-37j4fa3rg0i7g948h4bj6sp4ssjp63as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEOkuT29H6kSqjdEeN2f8TXr56odO7x9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770477229707-37j4fa3rg0i7g948h4bj6sp4ssjp63as.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/drawable/background_botao.xml" value="0.30833333333333335" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/drawable/background_caixa_texto.xml" value="0.30833333333333335" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/drawable/background_degrade.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/drawable/ic_photo_camera_black_24dp.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.2078125" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout-w936dp/activity_login.xml" value="0.18169398907103826" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout/activity_FazerLogin.xml" value="0.26268115942028986" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout/activity_cadastrar_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout/activity_camera.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/app/src/main/res/layout/activity_main.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/drawable/background_FAB.xml" value="0.2796296296296296" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/drawable/background_botao.xml" value="0.2962962962962963" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/drawable/background_degrade.xml" value="0.28888888888888886" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/drawable/background_toolbar.xml" value="0.2796296296296296" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2796296296296296" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_cadastrar_evento.xml" value="0.33" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_cadastrar_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_camera.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_lista_evento.xml" value="0.33" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/activity_visualizar_evento.xml" value="0.36096014492753625" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/adapter_lista_eventos.xml" value="0.67" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/barra_inferior.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/bottom_navigation.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/content_visualizar_evento.xml" value="0.3654891304347826" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/layout/toolbar.xml" value="0.48703703703703705" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/OlhoVirtual/olhovirtual/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2796296296296296" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
