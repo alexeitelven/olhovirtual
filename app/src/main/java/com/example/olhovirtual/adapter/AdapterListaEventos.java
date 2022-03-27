@@ -48,20 +48,9 @@ public class AdapterListaEventos extends RecyclerView.Adapter<AdapterListaEvento
             if (uri != null){
                 Glide.with(context).load(uri)
                 .into(holder.imageEvento);
+            }else{
+                holder.imageEvento.setImageResource(R.drawable.logo4);
             }
-
-
-
-            /*
-            if( usuario.getCaminhoFoto() != null ){
-            Uri uri = Uri.parse( usuario.getCaminhoFoto() );
-            Glide.with(context).load(uri).into(holder.foto);
-            }else {
-            holder.foto.setImageResource(R.drawable.avatar);
-            }
-            */
-
-
     }
 
     @Override

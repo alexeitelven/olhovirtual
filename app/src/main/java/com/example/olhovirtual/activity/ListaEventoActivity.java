@@ -82,7 +82,10 @@ public class ListaEventoActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
+                                Evento eventoSelecionado = listaEventos.get(position);
                                 Intent i = new Intent(getApplicationContext(),VisualizarEventoActivity.class );
+                                i.putExtra("eventoSelecionado",eventoSelecionado);
+
                                 startActivity(i);
                                 //finish();
                             }
@@ -158,6 +161,7 @@ public class ListaEventoActivity extends AppCompatActivity {
         floatingRA = findViewById(R.id.floatingRA);
         floatingLocalizacao = findViewById(R.id.floatingLocalizacao);
         recyclerEventos = findViewById(R.id.recyclerListaEventos);
+
 
 
     }

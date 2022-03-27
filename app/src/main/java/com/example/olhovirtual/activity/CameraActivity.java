@@ -2,6 +2,7 @@ package com.example.olhovirtual.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -147,6 +148,8 @@ public class CameraActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        // SETAR LANDSCAPE
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         if (!checkCameraPermission()) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
@@ -155,14 +158,17 @@ public class CameraActivity extends BaseActivity {
         textureView = findViewById(R.id.texture);
         textureView.setSurfaceTextureListener(textureListener);
         igPhotoPreview = findViewById(R.id.ig_photo_preview);
-        gpCapturePhoto = findViewById(R.id.gp_take_photo);
-        gpSaveOrRetry = findViewById(R.id.gp_save_retry);
+        //gpCapturePhoto = findViewById(R.id.gp_take_photo);
+        //gpSaveOrRetry = findViewById(R.id.gp_save_retry);
 
+        /*
         ImageButton takePictureButton = findViewById(R.id.btn_takepicture);
         takePictureButton.setOnClickListener(v -> {
             takePicture();
         });
+        */
 
+        /*
         ImageButton deletePictureButton = findViewById(R.id.btn_delete);
         deletePictureButton.setOnClickListener(v -> {
             if (file != null && file.exists()) {
@@ -178,6 +184,8 @@ public class CameraActivity extends BaseActivity {
             gpCapturePhoto.setVisibility(View.VISIBLE);
             gpSaveOrRetry.setVisibility(View.GONE);
         });
+        */
+
     }
 
 

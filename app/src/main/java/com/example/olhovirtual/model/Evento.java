@@ -5,9 +5,10 @@ import android.net.Uri;
 import com.example.olhovirtual.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.Serializable;
 import java.net.URI;
 
-public class Evento {
+public class Evento implements Serializable {
 
     private String id;
     private String nomeEvento;
