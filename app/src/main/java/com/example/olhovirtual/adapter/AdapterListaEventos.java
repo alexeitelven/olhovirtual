@@ -69,7 +69,7 @@ public class AdapterListaEventos extends RecyclerView.Adapter<AdapterListaEvento
             imageEvento = itemView.findViewById(R.id.imageAdEvento);
             tituloEvento = itemView.findViewById(R.id.textAdTitulo);
             descricao = itemView.findViewById(R.id.textAdDescricao);
-            bordaLayout = itemView.findViewById(R.id.bordaLayout);
+            //bordaLayout = itemView.findViewById(R.id.bordaLayout);
 
         }
     }

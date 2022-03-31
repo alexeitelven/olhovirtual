@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,6 +60,18 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         //toolbar.setSubtitle("Sub título");
         setSupportActionBar(toolbar);
 
+        botaoComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(VisualizarEventoActivity.this, ComentariosActivity.class);
+                i.putExtra("idEvento",eventoDestinatario.getId());
+                startActivity(i);
+            }
+        });
+
+
+
+
     }
 
     public void inicializarComponentes() {
@@ -66,7 +80,8 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         campoHorarioAtendimento = findViewById(R.id.textVEHorarios);
         campoValores = findViewById(R.id.textVEValores);
         imagemEvento = findViewById(R.id.imageVEEvento);
-
+        botaoComentarios = findViewById(R.id.buttonComentarios);
+        botaoLocalizacao = findViewById(R.id.buttonLocalizacao);
 
     }
 }

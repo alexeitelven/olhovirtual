@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.olhovirtual.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +23,25 @@ public class UsuarioFirebase {
         return usuario.getCurrentUser();
 
     }
+
+    public static String getIdentificadorUsuario(){
+        return getUsuarioAtual().getUid();
+    }
+
+    public static Usuario getDadosUsuarioLogado(){
+
+        FirebaseUser firebaseUser = getUsuarioAtual();
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail( firebaseUser.getEmail() );
+        //usuario.setNome( firebaseUser.getDisplayName() );
+        usuario.setId( firebaseUser.getUid() );
+
+
+        return usuario;
+
+    }
+
 
     public static void atualizarNomeUsuario(String nome){
 

@@ -24,10 +24,28 @@ public class Evento implements Serializable {
     }
 
     public void salvar(){
+        /*
+        + eventos
+            +id_evento
+                dados_eventos
+         */
+
+        /* OLD
         DatabaseReference firebase = ConfiguracaoFirebase.getFirebase();
         firebase.child("eventos")
                 .push()
                 .setValue(this);
+        */
+
+
+        DatabaseReference eventoRef = ConfiguracaoFirebase.getFirebase()
+                .child("eventos");
+
+        //Retorna a chave do comentarios atual recem criado
+        String chaveEvento = eventoRef.push().getKey();
+        setId(chaveEvento);
+        eventoRef.child(getId()).setValue(this);
+
 
     }
 

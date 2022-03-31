@@ -121,6 +121,8 @@ public class CadastrarEventoActivity extends AppCompatActivity {
         botaoAdicionarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                botaoCadastrar.setVisibility(View.GONE);
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if( i.resolveActivity(getPackageManager()) != null ){
                     startActivityForResult(i, SELECAO_GALERIA);
@@ -203,6 +205,8 @@ public class CadastrarEventoActivity extends AppCompatActivity {
                         Toast.makeText(CadastrarEventoActivity.this,
                                 "Upload da imagem realizado com sucesso!",
                                 Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        botaoCadastrar.setVisibility(View.VISIBLE);
                     }
                 });
 

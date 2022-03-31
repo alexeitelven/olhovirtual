@@ -157,7 +157,7 @@ public class CameraActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         textureView = findViewById(R.id.texture);
         textureView.setSurfaceTextureListener(textureListener);
-        igPhotoPreview = findViewById(R.id.ig_photo_preview);
+        //igPhotoPreview = findViewById(R.id.ig_photo_preview);
         //gpCapturePhoto = findViewById(R.id.gp_take_photo);
         //gpSaveOrRetry = findViewById(R.id.gp_save_retry);
 

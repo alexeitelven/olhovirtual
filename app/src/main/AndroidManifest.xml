@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OlhoVirtual">
         <activity
+            android:name=".activity.ComentariosActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.VisualizarEventoActivity"
             android:exported="false" />
         <activity

@@ -20,7 +20,8 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/black" />
 
     <ImageView
         android:id="@+id/imageVEEvento"
@@ -41,17 +42,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Informações:"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageVEEvento" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="277dp" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -74,14 +70,17 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descrição:" />
+                android:text="Descrição:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textVEDescricao"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_caixa_texto"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:padding="6dp"
+                android:textColor="@color/black" />
 
             <Space
                 android:layout_width="match_parent"
@@ -91,14 +90,17 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Valores:" />
+                android:text="Valores:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textVEValores"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_caixa_texto"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:padding="6dp"
+                android:textColor="@color/black" />
 
             <Space
                 android:layout_width="match_parent"
@@ -108,42 +110,45 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Horários de atendimento:" />
+                android:text="Horários de atendimento:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textVEHorarios"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_caixa_texto"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:padding="6dp"
+                android:textColor="@color/black" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="24dp" />
 
-            <LinearLayout
+            <Button
+                android:id="@+id/buttonLocalizacao"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:background="@drawable/background_botao"
+                android:text="Localização"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_location_24"
+                app:iconGravity="textStart" />
 
-                <Button
-                    android:id="@+id/buttonLocalizacao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_botao"
-                    android:text="Localização"
-                    app:icon="@drawable/ic_location_24"
-                    app:iconGravity="textStart" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
 
-                <Button
-                    android:id="@+id/buttonComentarios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_botao"
-                    android:text="Comentários"
-                    app:icon="@drawable/ic_comment_24"
-                    app:iconGravity="textStart" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/buttonComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_botao"
+                android:text="Comentários"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_comment_24"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
     </ScrollView>
