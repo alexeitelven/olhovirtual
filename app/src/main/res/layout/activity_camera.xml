@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintAnimado"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CameraActivity"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".activity.CameraActivity">
 
     <com.example.olhovirtual.activity.AutoFitTextureView
         android:id="@+id/texture"
@@ -15,68 +16,77 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="181dp"
-        android:layout_height="362dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/screen_background_light_transparent" />
-
-    <TextView
-        android:id="@+id/txtScrol"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="xzcz"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="188dp"
-        android:layout_height="364dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textCTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_comentario"
+        android:padding="6dp"
+        android:text="Título Evento"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.698"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textCDescricao"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_comentario"
+        android:inputType="textMultiLine"
+        android:padding="6dp"
+        android:text="Descricao Evento"
+        app:layout_constraintBottom_toTopOf="@+id/floatingCComentarios"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304"
-        app:srcCompat="@android:drawable/screen_background_light_transparent" />
+        app:layout_constraintVertical_bias="0.141" />
+
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/textCHorarios"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Texto sobre o Local"
-        app:layout_constraintBottom_toBottomOf="@+id/texture"
-        app:layout_constraintEnd_toEndOf="@+id/texture"
-        app:layout_constraintHorizontal_bias="0.105"
-        app:layout_constraintStart_toStartOf="@+id/texture"
-        app:layout_constraintTop_toTopOf="@+id/texture"
-        app:layout_constraintVertical_bias="0.088" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Texto sobre o Local"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/background_comentario"
+        android:inputType="textMultiLine"
+        android:padding="6dp"
+        android:text="Horários"
+        app:layout_constraintBottom_toTopOf="@+id/textCHorarios"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.911"
-        app:layout_constraintStart_toStartOf="@+id/texture"
-        app:layout_constraintTop_toTopOf="@+id/texture" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textCValores"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="168dp"
+        android:background="@drawable/background_comentario"
+        android:inputType="textMultiLine"
+        android:padding="6dp"
+        android:text="Valores"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingCComentarios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#D568A0DC"
+        android:clickable="true"
+        app:borderWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_comment_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

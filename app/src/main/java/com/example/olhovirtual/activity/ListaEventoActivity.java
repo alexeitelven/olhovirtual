@@ -109,7 +109,9 @@ public class ListaEventoActivity extends AppCompatActivity {
         floatingRA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                testeCamera();
+                Intent clickPhoto = new Intent(getApplicationContext(), CameraActivity.class);
+
+                startActivity(clickPhoto);
             }
         });
         floatingLocalizacao.setOnClickListener(new View.OnClickListener() {

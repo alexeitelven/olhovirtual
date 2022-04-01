@@ -2,6 +2,7 @@ package com.example.olhovirtual.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -36,12 +37,23 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 
 import com.example.olhovirtual.R;
+import com.example.olhovirtual.helper.ConfiguracaoFirebase;
+import com.example.olhovirtual.model.Evento;
+import com.example.olhovirtual.model.Usuario;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,6 +74,14 @@ public class CameraActivity extends BaseActivity {
     private ImageView igPhotoPreview;
     private Group gpCapturePhoto, gpSaveOrRetry;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+
+    private TextView  textTitulo,textDescricao,textValores,textHoarios;
+    private FloatingActionButton fabComentarios;
+
+    private FirebaseAuth autenticacao;
+    private DatabaseReference eventoRef;
+    private Evento eventoDestino;
+    private String IdEventoREF;
 
 
 
@@ -157,6 +177,57 @@ public class CameraActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         textureView = findViewById(R.id.texture);
         textureView.setSurfaceTextureListener(textureListener);
+
+        inicializaComponentes();
+
+        //Autenticação firebase
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+
+        //Cria objeto do evento para imprimir dados
+        eventoDestino = new Evento();
+
+        //Pesquisa dados e preenche Tela
+
+        //QRY RESULTADO EVENTOS
+        eventoRef = ConfiguracaoFirebase.getFirebase()
+                .child("eventos");
+
+        Query query = eventoRef.orderByKey().equalTo("-Mz7uIWYq0isCpQZ0-Nz");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            Evento temp = new Evento();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    temp = ds.getValue(Evento.class);
+                    //Log.i("Evento",ds.getValue().toString());
+                }
+                //Log.i("Evento",temp.getNomeEvento());
+                IdEventoREF =temp.getId();
+
+                //Insere dados na tela
+                textTitulo.setText(temp.getNomeEvento());
+                textDescricao.setText(temp.getDescricao());
+                textHoarios.setText(temp.getHorarioAtendimento());
+                textValores.setText(temp.getValores());
+                //Log.i("Evento",eventoDestino.getId());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+        //textValores.setRotationX(60);
+
+
+
+        //--------------------------------------------------------
+
+
         //igPhotoPreview = findViewById(R.id.ig_photo_preview);
         //gpCapturePhoto = findViewById(R.id.gp_take_photo);
         //gpSaveOrRetry = findViewById(R.id.gp_save_retry);
@@ -185,6 +256,18 @@ public class CameraActivity extends BaseActivity {
             gpSaveOrRetry.setVisibility(View.GONE);
         });
         */
+
+
+
+        fabComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ComentariosActivity.class);
+                intent.putExtra("idEvento",IdEventoREF);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -882,4 +965,16 @@ public class CameraActivity extends BaseActivity {
         stopBackgroundThread();
         super.onPause();
     }
+
+    public void inicializaComponentes(){
+        textTitulo = findViewById(R.id.textCTitulo);
+        textDescricao = findViewById(R.id.textCDescricao);
+        textValores = findViewById(R.id.textCValores);
+        textHoarios = findViewById(R.id.textCHorarios);
+        fabComentarios = findViewById(R.id.floatingCComentarios);
+
+
+    }
+
+
 }
