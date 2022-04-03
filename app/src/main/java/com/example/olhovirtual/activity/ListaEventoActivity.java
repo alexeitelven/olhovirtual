@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.olhovirtual.MapsActivity;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.adapter.AdapterListaEventos;
 import com.example.olhovirtual.databinding.ActivityMainBinding;
@@ -117,8 +118,14 @@ public class ListaEventoActivity extends AppCompatActivity {
         floatingLocalizacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                 */
+                Intent clickPhoto = new Intent(getApplicationContext(), MapsActivity.class);
+
+                startActivity(clickPhoto);
             }
         });
     }

@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=44:27:40:DE:27:F0:6D:DF:BF:2E:BB:33:AD:2E:06:04:E4:E3:84:64%3Bcom.example.olhovirtual
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.olhovirtual
+
+    SHA-1 certificate fingerprint:
+    44:27:40:DE:27:F0:6D:DF:BF:2E:BB:33:AD:2E:06:04:E4:E3:84:64
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDEUQ8lP0bfMbmaF91w0VQR5SSfiOsicTo</string>
+</resources>
