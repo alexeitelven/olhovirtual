@@ -13,8 +13,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.olhovirtual.adapter.AdapterListaEventos;
+import com.example.olhovirtual.helper.ConfiguracaoFirebase;
+import com.example.olhovirtual.helper.Util;
 import com.example.olhovirtual.helper.Permissoes;
+import com.example.olhovirtual.model.Evento;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,6 +27,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.olhovirtual.databinding.ActivityMapsBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -32,6 +45,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     };
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private Util util = new Util();
+
+    private List<Evento> listaEventos;
+    private DatabaseReference eventosRef;
 
 
     @Override
@@ -43,9 +60,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Validar Permissões
         Permissoes.validarPermissoes(permissoes, this, 1);
-
-
-
 
 
 
@@ -74,14 +88,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                Double latitude = location.getLatitude();
-                Double longitude = location.getLongitude();
+                Double latitudeUsr = location.getLatitude();
+                Double longitudeUsr = location.getLongitude();
 
                 //limpa mapa antes de adicionar o marcador do usuário
                 mMap.clear();
-                LatLng localUsuario = new LatLng(latitude, longitude);
+
+                LatLng localUsuario = new LatLng(latitudeUsr, longitudeUsr);
+
                 mMap.addMarker(new MarkerOptions().position(localUsuario).title("Meu Local"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localUsuario,15));
+
+                /*
+                Log.i("LogDistancia", "Distância : " + util.distEntreCoordenadas(
+                        -29.14070,-51.52270,-29.14039,-51.52271
+                ) );
+                */
+
+
 
             }
         };
@@ -93,14 +117,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     locationListener
             );
         }
-
-
-
-
-
-
-
-
 
     }
 
@@ -149,5 +165,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+
+    private void pesquisarEventos(double latitudeUsr, double longitudeUsr){
+
+        double latitudeUsuario = latitudeUsr;
+        double longitudeUsuario = longitudeUsr;
+
+
+        //QRY RESULTADO EVENTOS
+        listaEventos = new ArrayList<>();
+        eventosRef = ConfiguracaoFirebase.getFirebase()
+                .child("eventos");
+
+        //limpar lista
+        listaEventos.clear();
+
+        Query query = eventosRef.orderByChild("id");
+        //.startAt(texto)
+        //.endAt(texto + "\uf8ff" );
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //limpar lista
+                listaEventos.clear();
+
+                for( DataSnapshot ds : dataSnapshot.getChildren() ){
+
+                    listaEventos.add( ds.getValue(Evento.class) );
+
+                }
+
+                /*
+                int total = listaUsuarios.size();
+                Log.i("totalUsuarios", "total: " + total );
+                */
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 }
