@@ -20,6 +20,7 @@ import com.example.olhovirtual.helper.ConfiguracaoFirebase;
 import com.example.olhovirtual.helper.Util;
 import com.example.olhovirtual.helper.Permissoes;
 import com.example.olhovirtual.model.Evento;
+import com.example.olhovirtual.model.Usuario;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,13 +49,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Util util = new Util();
 
     private List<Evento> listaEventos;
+    private List<Evento> listaEventosProximos;
     private DatabaseReference eventosRef;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        listaEventos = new ArrayList<>();
+        listaEventosProximos = new ArrayList<>();
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -97,13 +100,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng localUsuario = new LatLng(latitudeUsr, longitudeUsr);
 
                 mMap.addMarker(new MarkerOptions().position(localUsuario).title("Meu Local"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(localUsuario));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localUsuario,18));
+
+                ///pesquisarEventos(latitudeUsr,longitudeUsr);
+                //----------------------------------------------------
+                //QRY RESULTADO EVENTOS
+                //listaEventos = new ArrayList<>();
+                eventosRef = ConfiguracaoFirebase.getFirebase()
+                        .child("eventos");
+
+                //limpar lista
+                listaEventos.clear();
+                //listaEventosProximos.clear();
+                Query query = eventosRef.orderByChild("id");
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //limpar lista
+                        listaEventos.clear();
+                        for( DataSnapshot ds : dataSnapshot.getChildren() ){
+                            listaEventos.add( ds.getValue(Evento.class) );
+                        }
+                        //Log.i("LogEvento", eventotst.getNomeEvento());
+                        int total = listaEventos.size();
+                        Log.i("Eventos", "total no ondataSnapshot: " + total );
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
-                Log.i("LogDistancia", "Distância : " + util.distEntreCoordenadas(
-                        -29.14070,-51.52270,-29.14039,-51.52271
-                ) );
-                
+                Log.i("Eventos", "total depois do qry: " +listaEventos.size() );
+
+                //----------------------------------------------------
+                double distancia = 0.0;
+                for (Evento obj : listaEventos) {
+
+                    distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,obj.getCoordenadaX(), obj.getCoordenadaY());
+                    Log.i("Eventos", "Distância Calculada : " + distancia);
+                    if(distancia < 5 ){
+                        listaEventosProximos.add(obj);
+                    }
+
+                }
+                Log.i("Eventos", "total proximo: " + listaEventosProximos.size() );
+                for (Evento obj : listaEventosProximos) {
+                    Log.i("Eventos", "nome" +obj.getNomeEvento());
+                }
+                //Log.i("Eventos", "total: " + listaEventos.size() );
+
+
+
 
 
 
@@ -167,51 +219,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dialog.show();
     }
 
-
-    private void pesquisarEventos(double latitudeUsr, double longitudeUsr){
-
-        double latitudeUsuario = latitudeUsr;
-        double longitudeUsuario = longitudeUsr;
-
-
-        //QRY RESULTADO EVENTOS
-        listaEventos = new ArrayList<>();
-        eventosRef = ConfiguracaoFirebase.getFirebase()
-                .child("eventos");
-
-        //limpar lista
-        listaEventos.clear();
-
-        Query query = eventosRef.orderByChild("id");
-        //.startAt(texto)
-        //.endAt(texto + "\uf8ff" );
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //limpar lista
-                listaEventos.clear();
-
-                for( DataSnapshot ds : dataSnapshot.getChildren() ){
-
-                    listaEventos.add( ds.getValue(Evento.class) );
-
-                }
-
-                /*
-                int total = listaUsuarios.size();
-                Log.i("totalUsuarios", "total: " + total );
-                */
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-    }
 }

@@ -16,7 +16,7 @@ public class Util {
         double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                 Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(initialLat) * Math.cos(finalLat);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        return R * c * 100;
+        return R * c * 1000;//Converte para metros
     }
 
     public double toRadians(double deg) {
