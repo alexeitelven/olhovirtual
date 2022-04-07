@@ -97,13 +97,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng localUsuario = new LatLng(latitudeUsr, longitudeUsr);
 
                 mMap.addMarker(new MarkerOptions().position(localUsuario).title("Meu Local"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localUsuario,15));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(localUsuario));
 
-                /*
+
                 Log.i("LogDistancia", "Distância : " + util.distEntreCoordenadas(
                         -29.14070,-51.52270,-29.14039,-51.52271
                 ) );
-                */
+                
 
 
 
