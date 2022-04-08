@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.olhovirtual.databinding.ActivityMapsBinding;
@@ -36,11 +37,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+
     private String[] permissoes = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION
     };
@@ -87,10 +90,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Objeto que gerecia a localização do usuário.
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
         //Objeto responsável por receber as atualizações do usuário
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                //retorna localização do usuário
                 Double latitudeUsr = location.getLatitude();
                 Double longitudeUsr = location.getLongitude();
 
@@ -102,7 +107,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(localUsuario).title("Meu Local"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localUsuario,18));
 
-                ///pesquisarEventos(latitudeUsr,longitudeUsr);
                 //----------------------------------------------------
                 //QRY RESULTADO EVENTOS
                 //listaEventos = new ArrayList<>();
@@ -111,7 +115,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //limpar lista
                 listaEventos.clear();
-                //listaEventosProximos.clear();
+                listaEventosProximos.clear();
+
                 Query query = eventosRef.orderByChild("id");
 
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -119,53 +124,112 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //limpar lista
                         listaEventos.clear();
+                        listaEventosProximos.clear();
                         for( DataSnapshot ds : dataSnapshot.getChildren() ){
                             listaEventos.add( ds.getValue(Evento.class) );
                         }
-                        //Log.i("LogEvento", eventotst.getNomeEvento());
+
                         int total = listaEventos.size();
-                        Log.i("Eventos", "total no ondataSnapshot: " + total );
+                        //Log.i("Eventos", "total no ondataSnapshot: " + total );
 
+                        double distancia = 0.0;
+
+                        for (Evento obj : listaEventos) {
+                            //Log.i("Eventos", "calculando distancia" );
+
+                            distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,obj.getCoordenadaX(), obj.getCoordenadaY());
+                            //Log.i("Eventos", "Distância Calculada : " + distancia);
+                            if(distancia < 100 ){
+                                listaEventosProximos.add(obj);
+                            }
+
+                        }
+
+
+                        Log.i("Eventos", "total proximo: " + listaEventosProximos.size() );
+                        for (Evento evt : listaEventosProximos) {
+                            //Log.i("Eventos", "nome :" +evt.getNomeEvento());
+                            //Log.i("Eventos", "coordenada X :" +evt.getCoordenadaX());
+                            //Log.i("Eventos", "coordenada y :" +evt.getCoordenadaY());
+                            //Retorna Coordenada do evento
+                            double coordenadaX = evt.getCoordenadaX();
+                            double coordenadaY = evt.getCoordenadaY();
+
+                            LatLng localEvento = new LatLng(coordenadaX,coordenadaY);
+
+                            //Adiciona Marcador com cor aleatória
+                            Random numero = new Random();
+                            switch (numero.nextInt(8)) {
+                                case 0:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                                    break;
+                                case 1:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                                    break;
+
+                                case 2:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                                    break;
+                                case 3:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                    break;
+                                case 4:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                                    break;
+                                case 5:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                                    break;
+                                case 6:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+                                    break;
+                                case 7:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                                    break;
+                                case 8:
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(localEvento)
+                                            .title(evt.getNomeEvento())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                                    break;
+                            }
+                        }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
-
-
-                Log.i("Eventos", "total depois do qry: " +listaEventos.size() );
-
-                //----------------------------------------------------
-                double distancia = 0.0;
-                for (Evento obj : listaEventos) {
-
-                    distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,obj.getCoordenadaX(), obj.getCoordenadaY());
-                    Log.i("Eventos", "Distância Calculada : " + distancia);
-                    if(distancia < 5 ){
-                        listaEventosProximos.add(obj);
-                    }
-
-                }
-                Log.i("Eventos", "total proximo: " + listaEventosProximos.size() );
-                for (Evento obj : listaEventosProximos) {
-                    Log.i("Eventos", "nome" +obj.getNomeEvento());
-                }
-                //Log.i("Eventos", "total: " + listaEventos.size() );
-
-
-
-
-
-
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    3000, //Tempo das atualizações em milisegundos
-                    1, //distÂncia em metros para receber atualizações
+                    5000, //Tempo das atualizações em milisegundos
+                    2, //distÂncia em metros para receber atualizações
                     locationListener
             );
         }
@@ -191,7 +255,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
-                            3000, //Tempo das atualizações em milisegundos
+                            5000, //Tempo das atualizações em milisegundos
                             1, //distÂncia em metros para receber atualizações
                             locationListener
 
