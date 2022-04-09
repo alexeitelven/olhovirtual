@@ -104,7 +104,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 LatLng localUsuario = new LatLng(latitudeUsr, longitudeUsr);
 
-                mMap.addMarker(new MarkerOptions().position(localUsuario).title("Meu Local"));
+                mMap.addMarker(new MarkerOptions().position(localUsuario).title("Estou Aqui!!!").icon(
+                        //BitmapDescriptorFactory.fromResource(R.drawable.icons_minha_localizacao_red_48)));
+                        BitmapDescriptorFactory.fromResource(R.drawable.icons_minha_localizacao_red_48)));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localUsuario,18));
 
                 //----------------------------------------------------
@@ -144,7 +146,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
 
                         }
-
 
                         Log.i("Eventos", "total proximo: " + listaEventosProximos.size() );
                         for (Evento evt : listaEventosProximos) {
@@ -218,6 +219,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                         }
                     }
+
+
+
+                    
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
