@@ -59,14 +59,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         listaEventos = new ArrayList<>();
         listaEventosProximos = new ArrayList<>();
+
+
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         //Validar Permissões
         Permissoes.validarPermissoes(permissoes, this, 1);
-
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
