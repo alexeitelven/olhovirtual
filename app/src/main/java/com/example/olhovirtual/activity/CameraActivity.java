@@ -43,6 +43,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,6 +108,8 @@ public class CameraActivity extends BaseActivity {
     private List<Evento> listaEventos;
     public List<Evento> listaEventosProximos  = new ArrayList<>();
     private DatabaseReference eventosRef;
+
+    private ProgressBar progressBar;
     //----------------------------------------------------------------
 
     static {
@@ -204,53 +207,15 @@ public class CameraActivity extends BaseActivity {
         textureView = findViewById(R.id.texture);
         textureView.setSurfaceTextureListener(textureListener);
 
-
         inicializaComponentes();
+
+        mensagemInicial();
 
         //Validar Permissões
         Permissoes.validarPermissoes(permissoes, this, 1);
 
         //Autenticação firebase
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-        /*
-        //Cria objeto do evento para imprimir dados
-        eventoDestino = new Evento();
-
-        //Pesquisa dados e preenche Tela
-
-        //QRY RESULTADO EVENTOS
-        eventoRef = ConfiguracaoFirebase.getFirebase()
-                .child("eventos");
-
-        Query query = eventoRef.orderByKey().equalTo("-Mz7uIWYq0isCpQZ0-Nz");
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            Evento temp = new Evento();
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot ds : snapshot.getChildren()){
-                    temp = ds.getValue(Evento.class);
-                    //Log.i("Evento",ds.getValue().toString());
-                }
-                //Log.i("Evento",temp.getNomeEvento());
-                IdEventoREF =temp.getId();
-
-                //Insere dados na tela
-                textTitulo.setText(temp.getNomeEvento());
-                textDescricao.setText(temp.getDescricao());
-                textHoarios.setText(temp.getHorarioAtendimento());
-                textValores.setText(temp.getValores());
-                //Log.i("Evento",eventoDestino.getId());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-        */
 
         //--------------------------------------------------------
         //Objeto que gerecia a localização do usuário.
@@ -260,6 +225,8 @@ public class CameraActivity extends BaseActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+
+                mensagemInicial();
                 //retorna localização do usuário
                 Double latitudeUsr = location.getLatitude();
                 Double longitudeUsr = location.getLongitude();
@@ -292,6 +259,7 @@ public class CameraActivity extends BaseActivity {
                             distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,evento.getCoordenadaX(), evento.getCoordenadaY());
                             //Log.i("Eventos", "Distância Calculada : " + distancia);
                             if(distancia < 5 ){ // DISTANCIA EM METROS obj.getRaio()
+                                progressBar.setVisibility(View.GONE);
                                 // Referencia do evento para tela de comentarios
                                 IdEventoREF = evento.getId();
                                 //Insere dados na tela
@@ -316,9 +284,6 @@ public class CameraActivity extends BaseActivity {
         };
 
 
-
-
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
@@ -328,7 +293,6 @@ public class CameraActivity extends BaseActivity {
             );
         }
         //--------------------------------------------------------
-
 
         //igPhotoPreview = findViewById(R.id.ig_photo_preview);
         //gpCapturePhoto = findViewById(R.id.gp_take_photo);
@@ -359,8 +323,6 @@ public class CameraActivity extends BaseActivity {
         });
         */
 
-
-
         fabComentarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -369,8 +331,6 @@ public class CameraActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
-
 
 
     }
@@ -1084,7 +1044,7 @@ public class CameraActivity extends BaseActivity {
         textValores = findViewById(R.id.textCValores);
         textHoarios = findViewById(R.id.textCHorarios);
         fabComentarios = findViewById(R.id.floatingCComentarios);
-
+        progressBar = findViewById(R.id.progressBarRA);
         listaEventos = new ArrayList<>();
 
 
@@ -1137,6 +1097,13 @@ public class CameraActivity extends BaseActivity {
         dialog.show();
     }
 
+    public void mensagemInicial(){
+        textTitulo.setText("Nenhuma informação encontrada!");
+        textDescricao.setText("Procurando nas proximidadades!");
+        textHoarios.setText("Carregando!");
+        textValores.setText("Lendo Coordenadas... AGUARDE!");
+        progressBar.setVisibility(View.VISIBLE);
+    };
 
 
 

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.olhovirtual.MapsActivity;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.model.Evento;
 
@@ -68,6 +69,16 @@ public class VisualizarEventoActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+        botaoLocalizacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent clickPhoto = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(clickPhoto);
+            }
+        });
+
 
 
 

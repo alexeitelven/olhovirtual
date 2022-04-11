@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_degrade"
+    android:background="@drawable/background_esquerda"
     android:orientation="horizontal"
     tools:context=".activity.ListaEventoActivity"
 
@@ -23,16 +23,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:subtitle="Sugestões:"
-        app:subtitleTextColor="@color/black"
+        app:subtitleTextColor="@color/azul_claro"
         app:title="Pontos turísticos e atrações locais"
-        app:titleTextColor="@color/black" />
+        app:titleTextColor="@color/azul_claro" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingLocalizacao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="#D568A0DC"
+        android:backgroundTint="#9468A0DC"
         android:clickable="true"
         android:src="@drawable/ic_location_24"
         app:borderWidth="2dp"
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="#D568A0DC"
+        android:backgroundTint="#9468A0DC"
         android:clickable="true"
         android:src="@drawable/ic_photo_camera_black_24dp"
         app:borderWidth="2dp"

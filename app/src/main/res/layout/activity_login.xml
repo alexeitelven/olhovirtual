@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_degrade"
+    android:background="@drawable/background_duplo"
     tools:context=".activity.LoginActivity">
 
   <ImageView
@@ -61,10 +61,10 @@
       android:id="@+id/buttonEntrar"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:background="@drawable/background_botao"
       android:layout_marginStart="24dp"
       android:layout_marginEnd="24dp"
       android:layout_marginBottom="16dp"
+      android:background="@drawable/background_botao"
       android:text="Entrar"
       android:textColor="@color/branco_app"
       app:layout_constraintBottom_toTopOf="@+id/textCadastrar"

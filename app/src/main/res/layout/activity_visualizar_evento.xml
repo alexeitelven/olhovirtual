@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_degrade"
+    android:background="@drawable/background_esquerda"
     android:orientation="horizontal"
     tools:context=".activity.VisualizarEventoActivity">
 
@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/black" />
+        app:titleTextColor="@color/azul_claro" />
 
     <ImageView
         android:id="@+id/imageVEEvento"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Informações:"
-        android:textColor="@color/black"
+        android:textColor="@color/azul_claro"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Descrição:"
-                android:textColor="@color/black" />
+                android:textColor="@color/azul_claro" />
 
             <TextView
                 android:id="@+id/textVEDescricao"
@@ -80,7 +80,7 @@
                 android:background="@drawable/background_caixa_texto"
                 android:inputType="textMultiLine"
                 android:padding="6dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/azul_claro" />
 
             <Space
                 android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Valores:"
-                android:textColor="@color/black" />
+                android:textColor="@color/azul_claro" />
 
             <TextView
                 android:id="@+id/textVEValores"
@@ -100,7 +100,7 @@
                 android:background="@drawable/background_caixa_texto"
                 android:inputType="textMultiLine"
                 android:padding="6dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/azul_claro" />
 
             <Space
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Horários de atendimento:"
-                android:textColor="@color/black" />
+                android:textColor="@color/azul_claro" />
 
             <TextView
                 android:id="@+id/textVEHorarios"
@@ -120,7 +120,7 @@
                 android:background="@drawable/background_caixa_texto"
                 android:inputType="textMultiLine"
                 android:padding="6dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/azul_claro" />
 
             <Space
                 android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/background_botao"
                 android:text="Localização"
-                android:textColor="@color/black"
+                android:textColor="@color/azul_claro"
                 app:icon="@drawable/ic_location_24"
                 app:iconGravity="textStart" />
 
@@ -146,7 +146,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/background_botao"
                 android:text="Comentários"
-                android:textColor="@color/black"
+                android:textColor="@color/azul_claro"
                 app:icon="@drawable/ic_comment_24"
                 app:iconGravity="textStart" />
 
