@@ -2,6 +2,7 @@ package com.example.olhovirtual.activity;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.TextureView;
 
 public class AutoFitTextureView extends TextureView {
@@ -50,18 +51,21 @@ public class AutoFitTextureView extends TextureView {
             if (width < height * mRatioWidth / mRatioHeight) {
                 //Invertido pq está deitado
                 setMeasuredDimension( height,width);
-
+                Log.i("Camera","dimensão 1: width: " + width +" heigth: " + height );
             } else {
-                setMeasuredDimension( height, width);
-                //setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
+                //setMeasuredDimension( height, width);
+                setMeasuredDimension(width, height);
+                Log.i("Camera","dimensão 1: width: " + width +" heigth: " + height );
             }
-
-            /* //ORIGINAL
+             //ORIGINAL
+            /*
             if (width < height * mRatioWidth / mRatioHeight) {
                 //setMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
                 setMeasuredDimension(width,width * mRatioHeight / mRatioWidth);
+                Log.i("Camera","dimensão 1: width: " + width +" heigth: " +width * mRatioHeight / mRatioWidth );
             } else {
                 setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
+                Log.i("Camera","dimensão 2: width: " + height * mRatioWidth / mRatioHeight+" heigth: " +height );
                 //setMeasuredDimension(width,width * mRatioHeight / mRatioWidth);
             }
             */

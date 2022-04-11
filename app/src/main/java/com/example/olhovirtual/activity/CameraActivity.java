@@ -1,9 +1,12 @@
 package com.example.olhovirtual.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +25,9 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
@@ -42,11 +48,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.app.ActivityCompat;
 
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.helper.ConfiguracaoFirebase;
+import com.example.olhovirtual.helper.Permissoes;
+import com.example.olhovirtual.helper.Util;
 import com.example.olhovirtual.model.Evento;
 import com.example.olhovirtual.model.Usuario;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -64,6 +77,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -75,15 +89,25 @@ public class CameraActivity extends BaseActivity {
     private Group gpCapturePhoto, gpSaveOrRetry;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
+    //----------------------------------------------------------------
+
     private TextView  textTitulo,textDescricao,textValores,textHoarios;
     private FloatingActionButton fabComentarios;
 
     private FirebaseAuth autenticacao;
-    private DatabaseReference eventoRef;
-    private Evento eventoDestino;
     private String IdEventoREF;
 
+    private String[] permissoes = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private Util util = new Util();
 
+    private List<Evento> listaEventos;
+    public List<Evento> listaEventosProximos  = new ArrayList<>();
+    private DatabaseReference eventosRef;
+    //----------------------------------------------------------------
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -122,12 +146,12 @@ public class CameraActivity extends BaseActivity {
     /**
      * Max preview width that is guaranteed by Camera2 API
      */
-    private static final int MAX_PREVIEW_WIDTH = 1920;
+    private static final int MAX_PREVIEW_WIDTH = 3840;//1920
 
     /**
      * Max preview height that is guaranteed by Camera2 API
      */
-    private static final int MAX_PREVIEW_HEIGHT = 1080;
+    private static final int MAX_PREVIEW_HEIGHT = 2160;//1080
 
     private String cameraId;
     protected CameraDevice cameraDevice;
@@ -167,8 +191,10 @@ public class CameraActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_camera);
-        // SETAR LANDSCAPE
+        // SETAR LANDSCAPE (ORIENTACAO)
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         if (!checkCameraPermission()) {
@@ -178,12 +204,16 @@ public class CameraActivity extends BaseActivity {
         textureView = findViewById(R.id.texture);
         textureView.setSurfaceTextureListener(textureListener);
 
+
         inicializaComponentes();
+
+        //Validar Permissões
+        Permissoes.validarPermissoes(permissoes, this, 1);
 
         //Autenticação firebase
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
-
+        /*
         //Cria objeto do evento para imprimir dados
         eventoDestino = new Evento();
 
@@ -220,11 +250,83 @@ public class CameraActivity extends BaseActivity {
             }
 
         });
+        */
 
-        //textValores.setRotationX(60);
+        //--------------------------------------------------------
+        //Objeto que gerecia a localização do usuário.
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        //Objeto responsável por receber as atualizações do usuário
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                //retorna localização do usuário
+                Double latitudeUsr = location.getLatitude();
+                Double longitudeUsr = location.getLongitude();
+               //----------------------------------------------------
+                //QRY RESULTADO EVENTOS
+                //listaEventos = new ArrayList<>();
+                eventosRef = ConfiguracaoFirebase.getFirebase()
+                        .child("eventos");
+
+                //limpar lista
+                listaEventos.clear();
+
+                Query query = eventosRef.orderByChild("id");
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //limpar lista
+                        listaEventos.clear();
+                        for( DataSnapshot ds : dataSnapshot.getChildren() ){
+                            listaEventos.add( ds.getValue(Evento.class) );
+                        }
+                        double distancia = 0.0;
 
 
 
+                        for (Evento evento : listaEventos) {
+                            //Log.i("Eventos", "calculando distancia" );
+                            distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,evento.getCoordenadaX(), evento.getCoordenadaY());
+                            //Log.i("Eventos", "Distância Calculada : " + distancia);
+                            if(distancia < 5 ){ // DISTANCIA EM METROS obj.getRaio()
+                                // Referencia do evento para tela de comentarios
+                                IdEventoREF = evento.getId();
+                                //Insere dados na tela
+                                textTitulo.setText(evento.getNomeEvento());
+                                textDescricao.setText(evento.getDescricao());
+                                textHoarios.setText(evento.getHorarioAtendimento());
+                                textValores.setText(evento.getValores());
+
+                            }
+
+                        }
+
+                    }
+                   @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+        };
+
+
+
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    5000, //Tempo das atualizações em milisegundos
+                    2, //distÂncia em metros para receber atualizações
+                    locationListener
+            );
+        }
         //--------------------------------------------------------
 
 
@@ -269,6 +371,8 @@ public class CameraActivity extends BaseActivity {
         });
 
 
+
+
     }
 
 
@@ -277,6 +381,7 @@ public class CameraActivity extends BaseActivity {
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             //open your camera here
             openCamera(width, height);
+
         }
 
         @Override
@@ -431,6 +536,7 @@ public class CameraActivity extends BaseActivity {
             // We configure the size of default buffer to be the size of camera preview we want.
             texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
 
+
             // This is the output Surface we need to start preview.
             Surface surface = new Surface(texture);
 
@@ -483,6 +589,8 @@ public class CameraActivity extends BaseActivity {
     private void openCamera(int width, int height) {
         setUpCameraOutputs(width, height);
         configureTransform(width, height);
+
+
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         Log.e(TAG, "is camera open");
         try {
@@ -587,6 +695,8 @@ public class CameraActivity extends BaseActivity {
                 this.getWindowManager().getDefaultDisplay().getSize(displaySize);
                 int rotatedPreviewWidth = width;
                 int rotatedPreviewHeight = height;
+
+
                 maxPreviewWidth = displaySize.x;
                 maxPreviewHeight = displaySize.y;
 
@@ -666,6 +776,8 @@ public class CameraActivity extends BaseActivity {
         List<Size> notBigEnough = new ArrayList<>();
         int w = aspectRatio.getWidth();
         int h = aspectRatio.getHeight();
+
+
         for (Size option : choices) {
             Log.d(TAG, "chooseOptimalSize: option width is " + option.toString());
             Log.d(TAG, "chooseOptimalSize: max value is " + maxWidth + " X " + maxHeight);
@@ -973,7 +1085,56 @@ public class CameraActivity extends BaseActivity {
         textHoarios = findViewById(R.id.textCHorarios);
         fabComentarios = findViewById(R.id.floatingCComentarios);
 
+        listaEventos = new ArrayList<>();
 
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for (int permissaoResultado : grantResults) {
+            if (permissaoResultado == PackageManager.PERMISSION_DENIED) {
+                //Alerta permissão NEGADA
+                alertaValidarPermissão();
+            } else if (permissaoResultado == PackageManager.PERMISSION_GRANTED) {
+                //Recupera  a localização do usuárip
+                /*
+                    1) Provedor da Localização
+                    2) Tempo mínimo entre atualizações de localização (milesegundos)
+                    3) Distancia mínima entre atualização de Localizações
+                    4) Locarion listener (para receber as atulizações)
+                 */
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            5000, //Tempo das atualizações em milisegundos
+                            1, //distÂncia em metros para receber atualizações
+                            locationListener
+
+
+                    );
+                }
+
+            }
+        }
+
+    }
+
+    private void alertaValidarPermissão(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permissões Negadas");
+        builder.setMessage("Para utilizar o App é necessário aceitar as permissões de localização");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

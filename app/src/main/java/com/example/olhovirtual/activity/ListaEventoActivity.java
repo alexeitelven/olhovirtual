@@ -77,162 +77,161 @@ public class ListaEventoActivity extends AppCompatActivity {
     //-----------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_evento);
-
         inicializarComponentes();
 
-        //Validar Permissões
+        //Localização do Usuário
         Permissoes.validarPermissoes(permissoes, this, 1);
 
 
+        //Verifica se o GPS está Ativo, caso não esteja solicita a Utilização
+        try {
+            checkGps();
+        } catch (Exception e) {
+            createNoGpsDialog();
 
+        }
 
-        //QRY RESULTADO EVENTOS
-        listaEventos = new ArrayList<>();
-        eventosRef = ConfiguracaoFirebase.getFirebase()
-                .child("eventos");
+        inicializarComponentes();
 
         //Configurar Toolbar
         Toolbar toolbar = findViewById(R.id.toolbarTurista);
         //toolbar.setTitle("Olho Virtual");
-        setSupportActionBar( toolbar);
+        setSupportActionBar(toolbar);
 
         //Autenticação firebase
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
-        //Lista de eventos
-
-
-        //Configuração RecyclerView
-        recyclerEventos.setHasFixedSize(true);
-        recyclerEventos.setLayoutManager(new LinearLayoutManager(this));
-
-       //adapterListaEventos = new AdapterListaEventos(listaEventos,getApplicationContext());
-        adapterListaEventos = new AdapterListaEventos(listaEventosProximos,getApplicationContext());
-        recyclerEventos.setAdapter(adapterListaEventos);
-
         //pesquisa eventos
 
         //--------------------------------------------------------------------------------------
-
         //Objeto que gerecia a localização do usuário.
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        //Objeto responsável por receber as atualizações do usuário
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                //retorna localização do usuário
-                Double latitudeUsr = location.getLatitude();
-                Double longitudeUsr = location.getLongitude();
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-                //----------------------------------------------------
-                //QRY RESULTADO EVENTOS
-                //listaEventos = new ArrayList<>();
-                eventosRef = ConfiguracaoFirebase.getFirebase()
-                        .child("eventos");
+            //Configuração RecyclerView
+            recyclerEventos.setHasFixedSize(true);
+            recyclerEventos.setLayoutManager(new LinearLayoutManager(this));
 
-                //limpar lista
-                listaEventos.clear();
-                listaEventosProximos.clear();
+            //adapterListaEventos = new AdapterListaEventos(listaEventos,getApplicationContext());
+            adapterListaEventos = new AdapterListaEventos(listaEventosProximos, getApplicationContext());
+            recyclerEventos.setAdapter(adapterListaEventos);
 
-                Query query = eventosRef.orderByChild("id");
+            //Objeto responsável por receber as atualizações do usuário
+            locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    //retorna localização do usuário
+                    Double latitudeUsr = location.getLatitude();
+                    Double longitudeUsr = location.getLongitude();
 
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //limpar lista
-                        listaEventos.clear();
-                        listaEventosProximos.clear();
-                        for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                            listaEventos.add( ds.getValue(Evento.class) );
-                        }
+                    //----------------------------------------------------
+                    //QRY RESULTADO EVENTOS
+                    //listaEventos = new ArrayList<>();
+                    eventosRef = ConfiguracaoFirebase.getFirebase()
+                            .child("eventos");
 
-                        double distancia = 0.0;
+                    //limpar lista
+                    listaEventos.clear();
+                    listaEventosProximos.clear();
 
-                        for (Evento obj : listaEventos) {
-                            //Log.i("Eventos", "calculando distancia" );
+                    Query query = eventosRef.orderByChild("id");
 
-                            distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,obj.getCoordenadaX(), obj.getCoordenadaY());
-                            //Log.i("Eventos", "Distância Calculada : " + distancia);
-                            if(distancia < 100 ){
-                                listaEventosProximos.add(obj);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //limpar lista
+                            listaEventos.clear();
+                            listaEventosProximos.clear();
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                listaEventos.add(ds.getValue(Evento.class));
                             }
+                            double distancia = 0.0;
+                            for (Evento obj : listaEventos) {
+                                //Log.i("Eventos", "calculando distancia" );
+
+                                distancia = util.distEntreCoordenadas(latitudeUsr, longitudeUsr, obj.getCoordenadaX(), obj.getCoordenadaY());
+                                //Log.i("Eventos", "Distância Calculada : " + distancia);
+                                if (distancia < 100) {
+                                    listaEventosProximos.add(obj);
+                                }
+                            }
+                            adapterListaEventos.notifyDataSetChanged();
+                            /*
+                            Log.i("Eventos", "total proximo: " + listaEventosProximos.size() );
+                            for (Evento evt : listaEventosProximos) {
+                                Log.i("Eventos", "nome :" +evt.getNomeEvento());
+                                Log.i("Eventos", "coordenada X :" +evt.getCoordenadaX());
+                                Log.i("Eventos", "coordenada y :" +evt.getCoordenadaY());
+                            }
+                            */
                         }
 
-                        adapterListaEventos.notifyDataSetChanged();
-                        /*
-                        Log.i("Eventos", "total proximo: " + listaEventosProximos.size() );
-                        for (Evento evt : listaEventosProximos) {
-                            Log.i("Eventos", "nome :" +evt.getNomeEvento());
-                            Log.i("Eventos", "coordenada X :" +evt.getCoordenadaX());
-                            Log.i("Eventos", "coordenada y :" +evt.getCoordenadaY());
-                        }
-                        */
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
+            };
+
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        5000, //Tempo das atualizações em milisegundos
+                        2, //distÂncia em metros para receber atualizações
+                        locationListener
+                );
             }
-        };
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    5000, //Tempo das atualizações em milisegundos
-                    2, //distÂncia em metros para receber atualizações
-                    locationListener
+            //--------------------------------------------------------------------------------------
+            recyclerEventos.addOnItemTouchListener(
+                    new RecyclerItemClickListener(
+                            getApplicationContext(),
+                            recyclerEventos,
+                            new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+                                    Evento eventoSelecionado = listaEventosProximos.get(position);
+                                    Intent i = new Intent(getApplicationContext(), VisualizarEventoActivity.class);
+                                    i.putExtra("eventoSelecionado", eventoSelecionado);
+                                    startActivity(i);
+                                    //finish();
+                                }
+
+                                @Override
+                                public void onLongItemClick(View view, int position) {
+                                }
+
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                                }
+                            }
+                    )
             );
+
+
+            floatingRA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent clickPhoto = new Intent(getApplicationContext(), CameraActivity.class);
+
+                    startActivity(clickPhoto);
+                }
+            });
+            floatingLocalizacao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent clickPhoto = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(clickPhoto);
+                }
+            });
         }
-
-        //--------------------------------------------------------------------------------------
-        recyclerEventos.addOnItemTouchListener(
-                new RecyclerItemClickListener(
-                        getApplicationContext(),
-                        recyclerEventos,
-                        new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Evento eventoSelecionado = listaEventosProximos.get(position);
-                                Intent i = new Intent(getApplicationContext(),VisualizarEventoActivity.class );
-                                i.putExtra("eventoSelecionado",eventoSelecionado);
-
-                                startActivity(i);
-                                //finish();
-                            }
-
-                            @Override
-                            public void onLongItemClick(View view, int position) {
-
-                            }
-
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                            }
-                        }
-                )
-        );
-
-
-        floatingRA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent clickPhoto = new Intent(getApplicationContext(), CameraActivity.class);
-
-                startActivity(clickPhoto);
-            }
-        });
-        floatingLocalizacao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent clickPhoto = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(clickPhoto);
-            }
-        });
     }
 
     @Override
@@ -280,45 +279,9 @@ public class ListaEventoActivity extends AppCompatActivity {
 
 
     }
-    public void testeCamera(){
-        Intent clickPhoto = new Intent(this, CameraActivity.class);
-        startActivity(clickPhoto);
-    }
 
-    private void pesquisarEventos(){
 
-        //limpar lista
-        listaEventos.clear();
-
-        Query query = eventosRef.orderByChild("id");
-                //.startAt(texto)
-                //.endAt(texto + "\uf8ff" );
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //limpar lista
-                listaEventos.clear();
-
-                for( DataSnapshot ds : dataSnapshot.getChildren() ){
-
-                    listaEventos.add( ds.getValue(Evento.class) );
-
-                }
-
-                adapterListaEventos.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
+    //Valida permissões para acessar a localização do Usuário e configura retornos
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -351,6 +314,7 @@ public class ListaEventoActivity extends AppCompatActivity {
 
     }
 
+    //Mensagem para confirmação de acesso a localização do usuário.
     private void alertaValidarPermissão(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Permissões Negadas");
@@ -365,6 +329,39 @@ public class ListaEventoActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    //Cria mensagem para Ativação do GPS
+    private void createNoGpsDialog(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent callGPSSettingIntent = new Intent(
+                                android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(callGPSSettingIntent);
+                        finish();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Por favor ative seu GPS para usar esse aplicativo. E depois reabra o aplicativo.")
+                .setPositiveButton("Ativar", dialogClickListener)
+                .create();
+        builder.show();
+
+    }
+    //Checa se GPS está ATIVO
+    public void checkGps() throws Exception{
+        LocationManager manager;
+        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            throw new Exception("gps off");
+        }
+    }
+
 
 
 
