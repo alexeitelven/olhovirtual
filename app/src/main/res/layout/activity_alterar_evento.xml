@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_cadastro"
+    tools:context=".activity.AlterarEventoActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageAltEvento"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@+id/editAltNomeEvento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/logo4" />
+
+        <EditText
+            android:id="@+id/editAltNomeEvento"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:hint="Nome evento"
+            android:inputType="text|textEmailAddress"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/editAltDescricaoEvento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageAltEvento" />
+
+        <EditText
+            android:id="@+id/editAltDescricaoEvento"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Descrição"
+            android:inputType="textMultiLine"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/editAltValores"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAltNomeEvento" />
+
+        <EditText
+            android:id="@+id/editAltEventoX"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:hint="Coordenada X"
+            android:inputType="numberSigned|numberDecimal|textEmailAddress"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/editAltEventoRaio"
+            app:layout_constraintEnd_toStartOf="@+id/editAltEventoY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAltHorarioAtendimento" />
+
+        <EditText
+            android:id="@+id/editAltEventoY"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:hint="Coordenada Y"
+            android:inputType="numberSigned|text|numberDecimal"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editAltEventoX"
+            app:layout_constraintTop_toBottomOf="@+id/editAltHorarioAtendimento" />
+
+        <EditText
+            android:id="@+id/editAltEventoRaio"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:hint="Raio"
+            android:inputType="number"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAltFotoEvento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAltEventoX" />
+
+        <EditText
+            android:id="@+id/editAltHorarioAtendimento"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Horários de atendimento"
+            android:inputType="textMultiLine"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/editAltEventoX"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAltValores" />
+
+        <Button
+            android:id="@+id/buttonAltFotoEvento"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_botao"
+            android:text="Alterar foto"
+            android:textColor="@color/branco_app"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAltEvento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAltEventoRaio" />
+
+        <Button
+            android:id="@+id/buttonAltEvento"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_botao"
+            android:text="Alterar cadastro"
+            android:textColor="@color/branco_app"
+            app:layout_constraintBottom_toTopOf="@+id/progressBarAltEvento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAltFotoEvento" />
+
+        <ProgressBar
+            android:id="@+id/progressBarAltEvento"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAltEvento" />
+
+        <EditText
+            android:id="@+id/editAltValores"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_caixa_texto"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Valores"
+            android:inputType="textMultiLine"
+            android:padding="6dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/editAltHorarioAtendimento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAltDescricaoEvento" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

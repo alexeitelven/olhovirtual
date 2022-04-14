@@ -42,6 +42,7 @@
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/drawable/background_toolbar_bkp.xml" value="0.20185185185185187" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/drawable/ic_location_24.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/drawable/ic_minha_localizacao_24.xml" value="0.20555555555555555" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/activity_alterar_evento.xml" value="0.27555053642010163" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/activity_cadastrar_evento.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/activity_cadastrar_usuario.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/activity_camera.xml" value="0.3432971014492754" />
@@ -54,6 +55,8 @@
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/activity_visualizar_evento.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/adapter_comentario.xml" value="0.5" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/layout/adapter_lista_eventos.xml" value="0.3532608695652174" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/menu/menu_evento.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/app/src/main/res/menu/menu_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/olhovirtual/app/src/main/res/drawable/background_caixa_texto.xml" value="0.2518518518518518" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/olhovirtual/app/src/main/res/drawable/background_toolbar.xml" value="0.2518518518518518" />
         <entry key="..\:/Users/Alex - Notebook/AndroidStudioProjects/Olhovirtual/olhovirtual/app/src/main/res/drawable/background_toolbar_BKP.xml" value="0.2518518518518518" />

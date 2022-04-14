@@ -161,13 +161,6 @@ public class CadastrarEventoActivity extends AppCompatActivity {
                         break;
                 }
 
-                /* Mostra a imagem no cadastro
-                //Ajustar layout
-                if (imagem !=null){
-                    //Adiicona imagem na tela
-                    imageEvento.setImageBitmap(imagem);
-                }
-                */
 
 
                 //

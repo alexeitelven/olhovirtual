@@ -209,6 +209,8 @@ public class CameraActivity extends BaseActivity {
 
         inicializaComponentes();
 
+
+
         mensagemInicial();
 
         //Validar Permissões
@@ -227,6 +229,7 @@ public class CameraActivity extends BaseActivity {
             public void onLocationChanged(@NonNull Location location) {
 
                 mensagemInicial();
+                fabComentarios.setVisibility(View.GONE);
                 //retorna localização do usuário
                 Double latitudeUsr = location.getLatitude();
                 Double longitudeUsr = location.getLongitude();
@@ -258,7 +261,7 @@ public class CameraActivity extends BaseActivity {
                             //Log.i("Eventos", "calculando distancia" );
                             distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,evento.getCoordenadaX(), evento.getCoordenadaY());
                             //Log.i("Eventos", "Distância Calculada : " + distancia);
-                            if(distancia < 5 ){ // DISTANCIA EM METROS obj.getRaio()
+                            if(distancia < 8){ // DISTANCIA EM METROS obj.getRaio()
                                 progressBar.setVisibility(View.GONE);
                                 // Referencia do evento para tela de comentarios
                                 IdEventoREF = evento.getId();
@@ -267,6 +270,7 @@ public class CameraActivity extends BaseActivity {
                                 textDescricao.setText(evento.getDescricao());
                                 textHoarios.setText(evento.getHorarioAtendimento());
                                 textValores.setText(evento.getValores());
+                                fabComentarios.setVisibility(View.VISIBLE);
 
                             }
 
@@ -1046,6 +1050,7 @@ public class CameraActivity extends BaseActivity {
         fabComentarios = findViewById(R.id.floatingCComentarios);
         progressBar = findViewById(R.id.progressBarRA);
         listaEventos = new ArrayList<>();
+        fabComentarios.setVisibility(View.GONE);
 
 
     }

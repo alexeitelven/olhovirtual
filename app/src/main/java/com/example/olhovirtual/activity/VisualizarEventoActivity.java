@@ -1,5 +1,6 @@
 package com.example.olhovirtual.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -7,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -34,6 +38,7 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_evento);
 
         inicializarComponentes();
+
 
         //Recuperar dados do Evento selecionado
         Bundle bundle = getIntent().getExtras();
@@ -74,8 +79,8 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         botaoLocalizacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent clickPhoto = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(clickPhoto);
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
             }
         });
 
@@ -84,6 +89,31 @@ public class VisualizarEventoActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_evento,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_alterarEvento:
+                Evento eventoAlterar =  eventoDestinatario;
+                Intent i = new Intent(getApplicationContext(), AlterarEventoActivity.class);
+                i.putExtra("eventoSelecionado", eventoAlterar);
+                startActivity(i);
+                finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void inicializarComponentes() {
 
