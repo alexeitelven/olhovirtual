@@ -26,17 +26,9 @@ public class Evento implements Serializable {
     public void salvar(){
         /*
         + eventos
-            +id_evento
+            + id_evento
                 dados_eventos
          */
-
-        /* OLD
-        DatabaseReference firebase = ConfiguracaoFirebase.getFirebase();
-        firebase.child("eventos")
-                .push()
-                .setValue(this);
-        */
-
 
         DatabaseReference eventoRef = ConfiguracaoFirebase.getFirebase()
                 .child("eventos");
@@ -52,22 +44,13 @@ public class Evento implements Serializable {
     public void alterar(){
         /*
         + eventos
-            +id_evento
+            + id_evento
                 dados_eventos
          */
-
-        /* OLD
-        DatabaseReference firebase = ConfiguracaoFirebase.getFirebase();
-        firebase.child("eventos")
-                .push()
-                .setValue(this);
-        */
-
 
         DatabaseReference eventoRef = ConfiguracaoFirebase.getFirebase()
                 .child("eventos");
         eventoRef.child(getId()).setValue(this);
-
 
     }
 

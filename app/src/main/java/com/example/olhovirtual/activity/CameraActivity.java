@@ -209,8 +209,6 @@ public class CameraActivity extends BaseActivity {
 
         inicializaComponentes();
 
-
-
         mensagemInicial();
 
         //Validar Permissões
@@ -333,6 +331,7 @@ public class CameraActivity extends BaseActivity {
                 Intent intent = new Intent(getApplicationContext(), ComentariosActivity.class);
                 intent.putExtra("idEvento",IdEventoREF);
                 startActivity(intent);
+                finish();
             }
         });
 

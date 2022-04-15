@@ -29,6 +29,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OlhoVirtual">
         <activity
+            android:name=".activity.AlterarUsuarioActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AlterarEventoActivity"
             android:exported="false" />
         <!--

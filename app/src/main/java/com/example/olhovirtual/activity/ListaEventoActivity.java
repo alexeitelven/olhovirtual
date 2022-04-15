@@ -254,6 +254,10 @@ public class ListaEventoActivity extends AppCompatActivity {
                 startActivity( new Intent(getApplicationContext(),CadastrarEventoActivity.class));
                 finish();
                 break;
+            case R.id.menu_AlterarPerfil:
+                startActivity( new Intent(getApplicationContext(),AlterarUsuarioActivity.class));
+                finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

@@ -37,8 +37,8 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
-        inicializarComponentes();
 
+        inicializarComponentes();
 
         progressBar.setVisibility(View.GONE);
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -118,14 +118,6 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            /*
-                            Toast.makeText(CadastrarUsuarioActivity.this,
-                                    "Cadastrado com sucesso!",
-                                    Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),ListaEventoActivity.class));
-                            finish();
-
-                             */
 
                         }else{
                             progressBar.setVisibility(View.GONE);

@@ -17,10 +17,25 @@ public class Usuario implements Serializable {
     }
 
     public void salvar(){
+        /*
+        + Usuário
+            + id_Usuário
+                dados_Usuário
+         */
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
         usuariosRef.setValue(this);
+    }
 
+    public void alterar(){
+        /*
+        + Usuário
+            + id_Usuário
+                dados_Usuário
+         */
+        DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebase()
+                .child("usuarios");
+        usuariosRef.child(getId()).setValue(this);
     }
 
 
