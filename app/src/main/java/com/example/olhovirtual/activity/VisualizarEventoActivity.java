@@ -69,9 +69,11 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         botaoComentarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(VisualizarEventoActivity.this, ComentariosActivity.class);
-                i.putExtra("idEvento",eventoDestinatario.getId());
-                startActivity(i);
+                Intent intent = new Intent(VisualizarEventoActivity.this, ComentariosActivity.class);
+                intent.putExtra("idEvento",eventoDestinatario.getId());
+                intent.putExtra("Activity","visualizarEventoActivity");
+                intent.putExtra("EventoDestinatario",eventoDestinatario);
+                startActivity(intent);
             }
         });
 
@@ -79,8 +81,10 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         botaoLocalizacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("Activity","visualizarEventoActivity");
+                intent.putExtra("EventoDestinatario",eventoDestinatario);
+                startActivity(intent);
             }
         });
 
@@ -124,5 +128,12 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         botaoComentarios = findViewById(R.id.buttonComentarios);
         botaoLocalizacao = findViewById(R.id.buttonLocalizacao);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,CameraActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -45,7 +45,10 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:ellipsize="end"
             android:inputType="textMultiLine"
+            android:scrollHorizontally="true"
+            android:maxLines="4"
             android:text="Descricao Teste"
             android:textColor="@color/azul_claro"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +56,8 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageAdEvento"
             app:layout_constraintTop_toBottomOf="@+id/textAdTitulo"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:textIsSelectable="false"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Space

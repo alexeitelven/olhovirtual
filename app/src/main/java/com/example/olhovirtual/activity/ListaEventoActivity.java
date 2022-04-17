@@ -226,8 +226,9 @@ public class ListaEventoActivity extends AppCompatActivity {
             floatingLocalizacao.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-                    startActivity(i);
+                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                    intent.putExtra("Activity","listaEventoActivity");
+                    startActivity(intent);
                 }
             });
         }
@@ -365,6 +366,12 @@ public class ListaEventoActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,CameraActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 
 

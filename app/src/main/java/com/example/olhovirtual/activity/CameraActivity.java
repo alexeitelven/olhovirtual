@@ -50,7 +50,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.example.olhovirtual.MapsActivity;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.helper.ConfiguracaoFirebase;
 import com.example.olhovirtual.helper.Permissoes;
@@ -93,7 +95,7 @@ public class CameraActivity extends BaseActivity {
     //----------------------------------------------------------------
 
     private TextView  textTitulo,textDescricao,textValores,textHoarios;
-    private FloatingActionButton fabComentarios;
+    private FloatingActionButton fabComentarios,fabLocalizacao ,fabListaEventos;
 
     private FirebaseAuth autenticacao;
     private String IdEventoREF;
@@ -199,6 +201,7 @@ public class CameraActivity extends BaseActivity {
         setContentView(R.layout.activity_camera);
         // SETAR LANDSCAPE (ORIENTACAO)
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
 
         if (!checkCameraPermission()) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
@@ -330,10 +333,31 @@ public class CameraActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ComentariosActivity.class);
                 intent.putExtra("idEvento",IdEventoREF);
+                intent.putExtra("Activity","cameraActivity");
                 startActivity(intent);
                 finish();
             }
         });
+
+        fabLocalizacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("Activity","cameraActivity");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        fabListaEventos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ListaEventoActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
     }
@@ -1047,6 +1071,8 @@ public class CameraActivity extends BaseActivity {
         textValores = findViewById(R.id.textCValores);
         textHoarios = findViewById(R.id.textCHorarios);
         fabComentarios = findViewById(R.id.floatingCComentarios);
+        fabListaEventos = findViewById(R.id.floatingCListaEventos);
+        fabLocalizacao = findViewById(R.id.floatingCLocalizacao);
         progressBar = findViewById(R.id.progressBarRA);
         listaEventos = new ArrayList<>();
         fabComentarios.setVisibility(View.GONE);

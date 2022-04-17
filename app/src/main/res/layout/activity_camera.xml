@@ -33,32 +33,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/textCDescricao"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/background_comentario"
+        android:ellipsize="end"
         android:inputType="textMultiLine"
+        android:maxLines="3"
         android:padding="6dp"
         android:text="Descricao Evento"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/floatingCComentarios"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/texture"
+        app:layout_constraintEnd_toStartOf="@+id/floatingCLocalizacao"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textCHorarios"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/background_comentario"
+        android:ellipsize="end"
         android:inputType="textMultiLine"
+        android:maxLines="3"
         android:padding="6dp"
         android:text="Horários"
         android:textColor="@color/black"
@@ -71,30 +74,58 @@
         android:id="@+id/textCValores"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/background_comentario"
+        android:ellipsize="end"
         android:inputType="textMultiLine"
+        android:maxLines="3"
         android:padding="6dp"
         android:text="Valores"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+        app:layout_constraintBottom_toTopOf="@+id/textCDescricao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingCComentarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#D568A0DC"
+        android:clickable="true"
+        app:borderWidth="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/floatingCListaEventos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_comment_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingCListaEventos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#D568A0DC"
+        android:clickable="true"
+        app:borderWidth="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/floatingCLocalizacao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_lista_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingCLocalizacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="#D568A0DC"
         android:clickable="true"
         app:borderWidth="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_comment_24" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_location_24" />
 
     <ProgressBar
         android:id="@+id/progressBarRA"

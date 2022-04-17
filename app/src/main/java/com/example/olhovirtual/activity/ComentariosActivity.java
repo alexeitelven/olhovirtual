@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +48,8 @@ public class ComentariosActivity extends AppCompatActivity {
     private DatabaseReference comentariosRef;
     private DatabaseReference usuarioRef;
     private ValueEventListener valueEventListenerComentarios;
-
+    private String activityAnterior;
+    private Evento eventoDestinatario = new Evento();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class ComentariosActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             idEvento = bundle.getString("idEvento");
+            eventoDestinatario = (Evento) bundle.getSerializable("EventoDestinatario");
         }
 
 
@@ -114,6 +117,32 @@ public class ComentariosActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        //Recuperar Local Onde foi pressionado o botão
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            activityAnterior = bundle.getString("Activity");
+        }
+
+        if (activityAnterior.equals("cameraActivity")) {
+            Intent intent = new Intent(this,CameraActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (activityAnterior.equals("visualizarEventoActivity")) {
+            Intent intent = new Intent(this, VisualizarEventoActivity.class);
+            intent.putExtra("eventoSelecionado",eventoDestinatario);
+            startActivity(intent);
+            finish();
+        }
+
+
     }
 
     @Override

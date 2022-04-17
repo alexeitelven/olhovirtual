@@ -242,9 +242,15 @@ public class CadastrarEventoActivity extends AppCompatActivity {
         botaoCadastrar = findViewById(R.id.buttonCadastrarEvento);
         botaoAdicionarFoto = findViewById(R.id.buttonAdicionarFotos);
         progressBar= findViewById(R.id.progressBarCadastroEvento);
-
         campoNomeEvento.requestFocus();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,ListaEventoActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

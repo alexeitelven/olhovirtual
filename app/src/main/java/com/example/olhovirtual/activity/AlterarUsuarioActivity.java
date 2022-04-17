@@ -84,9 +84,6 @@ public class AlterarUsuarioActivity extends AppCompatActivity {
             }
 
         });
-        
-
-
 
         progressBar.setVisibility(View.GONE);
 
@@ -221,13 +218,6 @@ public class AlterarUsuarioActivity extends AppCompatActivity {
                                 });
                     }
                 });
-
-
-
-
-
-
-
     }
 
 
@@ -244,6 +234,12 @@ public class AlterarUsuarioActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressAltUsuario);
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,ListaEventoActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

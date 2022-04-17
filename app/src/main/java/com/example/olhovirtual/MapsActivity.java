@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,6 +16,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.olhovirtual.activity.CameraActivity;
+import com.example.olhovirtual.activity.ListaEventoActivity;
+import com.example.olhovirtual.activity.VisualizarEventoActivity;
 import com.example.olhovirtual.adapter.AdapterListaEventos;
 import com.example.olhovirtual.helper.ConfiguracaoFirebase;
 import com.example.olhovirtual.helper.Util;
@@ -55,6 +59,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Evento> listaEventosProximos;
     private DatabaseReference eventosRef;
 
+    private Evento eventoDestinatario = new Evento();
+
+    private String activityAnterior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,5 +297,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        //Recuperar Local Onde foi pressionado o botão
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            activityAnterior = bundle.getString("Activity");
+            eventoDestinatario = (Evento) bundle.getSerializable("EventoDestinatario");
+        }
+
+        if (activityAnterior.equals("cameraActivity")) {
+            Intent intent = new Intent(this, CameraActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (activityAnterior.equals("listaEventoActivity")) {
+            Intent intent = new Intent(this, ListaEventoActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (activityAnterior.equals("visualizarEventoActivity")) {
+            Intent intent = new Intent(this, VisualizarEventoActivity.class);
+            intent.putExtra("eventoSelecionado",eventoDestinatario);
+            startActivity(intent);
+            finish();
+        }
+
+
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.example.olhovirtual.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -63,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             createNoGpsDialog(); }
-        //-----------------------------------
 
+        //-----------------------------------
         verificarUsuarioLogado();
 
         inicializarComponentes();
@@ -100,7 +101,12 @@ public class LoginActivity extends AppCompatActivity {
     public void verificarUsuarioLogado(){
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         if(autenticacao.getCurrentUser() != null){
-            startActivity( new Intent(getApplicationContext(),ListaEventoActivity.class));
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+                        50); }
+            //startActivity( new Intent(getApplicationContext(),ListaEventoActivity.class));
+            startActivity( new Intent(getApplicationContext(),CameraActivity.class));
             finish();
         }
     }
@@ -119,7 +125,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
-                    startActivity( new Intent(getApplicationContext(),ListaEventoActivity.class));
+                    //startActivity( new Intent(getApplicationContext(),ListaEventoActivity.class));
+                    startActivity( new Intent(getApplicationContext(),CameraActivity.class));
                     finish();
                 }else{
                     Toast.makeText(LoginActivity.this,"Login inválido, verifique sua senha ou realize seu cadastro!",Toast.LENGTH_SHORT).show();

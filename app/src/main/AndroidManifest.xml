@@ -16,10 +16,12 @@
         android:required="true" />
     <uses-feature
         android:name="android.hardware.camera.level.full"
-        android:required="false" />
+        android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
 
     <application
         android:allowBackup="true"
@@ -30,10 +32,14 @@
         android:theme="@style/Theme.OlhoVirtual">
         <activity
             android:name=".activity.AlterarUsuarioActivity"
-            android:exported="false" />
+            android:parentActivityName=".activity.ListaEventoActivity"
+            android:launchMode="singleTop"
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.AlterarEventoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -49,28 +55,38 @@
         <activity
             android:name=".MapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.ComentariosActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".activity.CameraActivity"
+            android:launchMode="singleTop"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.VisualizarEventoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.ListaEventoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.CadastrarEventoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.CadastrarUsuarioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,7 +95,8 @@
         </activity>
         <activity
             android:name=".activity.CameraActivity"
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
