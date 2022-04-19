@@ -199,16 +199,30 @@ public class CameraActivity extends BaseActivity {
 
 
         setContentView(R.layout.activity_camera);
-        // SETAR LANDSCAPE (ORIENTACAO)
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
 
         if (!checkCameraPermission()) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
         }
+        //Localização do Usuário
+        Permissoes.validarPermissoes(permissoes, this, 1);
+
+        //Verifica se o GPS está Ativo, caso não esteja solicita a Utilização
+        try {
+            checkGps();
+        } catch (Exception e) {
+            createNoGpsDialog();
+
+        }
+
+        // SETAR LANDSCAPE (ORIENTACAO)
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         textureView = findViewById(R.id.texture);
         textureView.setSurfaceTextureListener(textureListener);
+
+
+
 
         inicializaComponentes();
 
@@ -224,79 +238,84 @@ public class CameraActivity extends BaseActivity {
         //Objeto que gerecia a localização do usuário.
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        //Objeto responsável por receber as atualizações do usuário
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            //Objeto responsável por receber as atualizações do usuário
+            locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
 
-                mensagemInicial();
-                fabComentarios.setVisibility(View.GONE);
-                //retorna localização do usuário
-                Double latitudeUsr = location.getLatitude();
-                Double longitudeUsr = location.getLongitude();
-               //----------------------------------------------------
-                //QRY RESULTADO EVENTOS
-                //listaEventos = new ArrayList<>();
-                eventosRef = ConfiguracaoFirebase.getFirebase()
-                        .child("eventos");
+                    mensagemInicial();
+                    fabComentarios.setVisibility(View.GONE);
+                    //retorna localização do usuário
+                    Double latitudeUsr = location.getLatitude();
+                    Double longitudeUsr = location.getLongitude();
+                    //----------------------------------------------------
+                    //QRY RESULTADO EVENTOS
+                    //listaEventos = new ArrayList<>();
+                    eventosRef = ConfiguracaoFirebase.getFirebase()
+                            .child("eventos");
 
-                //limpar lista
-                listaEventos.clear();
+                    //limpar lista
+                    listaEventos.clear();
 
-                Query query = eventosRef.orderByChild("id");
+                    Query query = eventosRef.orderByChild("id");
 
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //limpar lista
-                        listaEventos.clear();
-                        for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                            listaEventos.add( ds.getValue(Evento.class) );
-                        }
-                        double distancia = 0.0;
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //limpar lista
+                            listaEventos.clear();
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                listaEventos.add(ds.getValue(Evento.class));
+                            }
+                            double distancia = 0.0;
 
 
+                            for (Evento evento : listaEventos) {
+                                //Log.i("Eventos", "calculando distancia" );
+                                distancia = util.distEntreCoordenadas(latitudeUsr, longitudeUsr, evento.getCoordenadaX(), evento.getCoordenadaY());
+                                //Log.i("Eventos", "Distância Calculada : " + distancia);
+                                if (distancia < 8) { // DISTANCIA EM METROS obj.getRaio()
+                                    progressBar.setVisibility(View.GONE);
+                                    // Referencia do evento para tela de comentarios
+                                    IdEventoREF = evento.getId();
+                                    //Insere dados na tela
+                                    textTitulo.setText(evento.getNomeEvento());
+                                    textDescricao.setText(evento.getDescricao());
+                                    textHoarios.setText(evento.getHorarioAtendimento());
+                                    textValores.setText(evento.getValores());
+                                    fabComentarios.setVisibility(View.VISIBLE);
 
-                        for (Evento evento : listaEventos) {
-                            //Log.i("Eventos", "calculando distancia" );
-                            distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,evento.getCoordenadaX(), evento.getCoordenadaY());
-                            //Log.i("Eventos", "Distância Calculada : " + distancia);
-                            if(distancia < 8){ // DISTANCIA EM METROS obj.getRaio()
-                                progressBar.setVisibility(View.GONE);
-                                // Referencia do evento para tela de comentarios
-                                IdEventoREF = evento.getId();
-                                //Insere dados na tela
-                                textTitulo.setText(evento.getNomeEvento());
-                                textDescricao.setText(evento.getDescricao());
-                                textHoarios.setText(evento.getHorarioAtendimento());
-                                textValores.setText(evento.getValores());
-                                fabComentarios.setVisibility(View.VISIBLE);
+                                }
 
                             }
 
                         }
 
-                    }
-                   @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
 
 
+                }
+            };
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        5000, //Tempo das atualizações em milisegundos
+                        2, //distÂncia em metros para receber atualizações
+                        locationListener
+                );
             }
-        };
 
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    5000, //Tempo das atualizações em milisegundos
-                    2, //distÂncia em metros para receber atualizações
-                    locationListener
-            );
         }
+
+
+
         //--------------------------------------------------------
 
         //igPhotoPreview = findViewById(R.id.ig_photo_preview);
@@ -1080,6 +1099,7 @@ public class CameraActivity extends BaseActivity {
 
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -1112,6 +1132,8 @@ public class CameraActivity extends BaseActivity {
 
     }
 
+
+
     private void alertaValidarPermissão(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Permissões Negadas");
@@ -1134,6 +1156,39 @@ public class CameraActivity extends BaseActivity {
         textValores.setText("Lendo Coordenadas... AGUARDE!");
         progressBar.setVisibility(View.VISIBLE);
     };
+
+    //Cria mensagem para Ativação do GPS
+    private void createNoGpsDialog(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent callGPSSettingIntent = new Intent(
+                                android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(callGPSSettingIntent);
+                        finish();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Por favor ative seu GPS para usar esse aplicativo. E depois reabra o aplicativo.")
+                .setPositiveButton("Ativar", dialogClickListener)
+                .create();
+        builder.show();
+
+    }
+    //Checa se GPS está ATIVO
+    public void checkGps() throws Exception{
+        LocationManager manager;
+        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            throw new Exception("gps off");
+        }
+    }
+
 
 
 
