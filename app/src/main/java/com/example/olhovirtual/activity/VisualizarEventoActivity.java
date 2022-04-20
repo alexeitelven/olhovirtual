@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.olhovirtual.MapsActivity;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.model.Evento;
@@ -49,6 +52,7 @@ public class VisualizarEventoActivity extends AppCompatActivity {
             campoValores.setText(eventoDestinatario.getValores());
 
             String fotoEvento = eventoDestinatario.getUrlImagem();
+            /* ANTIGO
             if( fotoEvento != null){
                 Uri url = Uri.parse(fotoEvento);
                 Glide.with(VisualizarEventoActivity.this)
@@ -57,6 +61,20 @@ public class VisualizarEventoActivity extends AppCompatActivity {
             }else{
                 imagemEvento.setImageResource(R.drawable.logo4);
             }
+            */
+            if( fotoEvento != null){
+                Uri url = Uri.parse(fotoEvento);
+                Glide.with(VisualizarEventoActivity.this)
+                        .load(url)
+                        .transform(
+                                new MultiTransformation(
+                                        new CenterCrop(),
+                                        new RoundedCorners(25)))
+                        .into(imagemEvento);
+            }else{
+                imagemEvento.setImageResource(R.drawable.logo4);
+            }
+
 
         }
 

@@ -83,6 +83,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import android.text.method.ScrollingMovementMethod;
+
+
 
 public class CameraActivity extends BaseActivity {
 
@@ -275,8 +278,8 @@ public class CameraActivity extends BaseActivity {
                             for (Evento evento : listaEventos) {
                                 //Log.i("Eventos", "calculando distancia" );
                                 distancia = util.distEntreCoordenadas(latitudeUsr, longitudeUsr, evento.getCoordenadaX(), evento.getCoordenadaY());
-                                //Log.i("Eventos", "Distância Calculada : " + distancia);
-                                if (distancia < 8) { // DISTANCIA EM METROS obj.getRaio()
+                                Log.i("Eventos", "Distância Calculada : " + distancia);
+                                if (distancia < 8) { // DISTANCIA EM METROS usar oobj.getRaio()?
                                     progressBar.setVisibility(View.GONE);
                                     // Referencia do evento para tela de comentarios
                                     IdEventoREF = evento.getId();
@@ -307,7 +310,7 @@ public class CameraActivity extends BaseActivity {
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
                         5000, //Tempo das atualizações em milisegundos
-                        2, //distÂncia em metros para receber atualizações
+                        1, //distÂncia em metros para receber atualizações
                         locationListener
                 );
             }
@@ -1096,6 +1099,11 @@ public class CameraActivity extends BaseActivity {
         listaEventos = new ArrayList<>();
         fabComentarios.setVisibility(View.GONE);
 
+        //TextView Scroll
+        textDescricao.setMovementMethod(new ScrollingMovementMethod());
+        textValores.setMovementMethod(new ScrollingMovementMethod());
+        textHoarios.setMovementMethod(new ScrollingMovementMethod());
+
 
     }
 
@@ -1150,9 +1158,9 @@ public class CameraActivity extends BaseActivity {
     }
 
     public void mensagemInicial(){
-        textTitulo.setText("Nenhuma informação encontrada!");
-        textDescricao.setText("Procurando nas proximidadades!");
-        textHoarios.setText("Carregando!");
+        textTitulo.setText("Nenhuma informação encontrada...");
+        textDescricao.setText("Procurando nas proximidades...");
+        textHoarios.setText("Carregando...");
         textValores.setText("Lendo Coordenadas... AGUARDE!");
         progressBar.setVisibility(View.VISIBLE);
     };

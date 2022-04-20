@@ -45,7 +45,7 @@ public class CadastrarEventoActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private String identificadorEvento;
     private byte[] dadosImagem;
-    private String url;
+    private String url =" ";
 
 
     @Override
@@ -83,21 +83,23 @@ public class CadastrarEventoActivity extends AppCompatActivity {
                         if(!textoCoordenadaX.isEmpty()){
                             if(!textoCoordenadaY.isEmpty()){
                                 if(!textoRaio.isEmpty()){
+                                    if(!url.equals(" ")){
+                                        evento = new Evento();
+                                        evento.setNomeEvento(textoNomeEvento);
+                                        evento.setDescricao(textoDescricao);
+                                        evento.setHorarioAtendimento(textoHorarioAtendimento);
+                                        evento.setValores(textoValores);
+                                        evento.setCoordenadaX(Double.valueOf(textoCoordenadaX).doubleValue());
+                                        evento.setCoordenadaY(Double.valueOf(textoCoordenadaY).doubleValue());
+                                        evento.setRaio(Double.valueOf(textoRaio).doubleValue());
+                                        evento.setIdAdm(userAdm);
+                                        evento.setUrlImagem(url);
 
-                                    evento = new Evento();
-                                    evento.setNomeEvento(textoNomeEvento);
-                                    evento.setDescricao(textoDescricao);
-                                    evento.setHorarioAtendimento(textoHorarioAtendimento);
-                                    evento.setValores(textoValores);
-                                    evento.setCoordenadaX(Double.valueOf(textoCoordenadaX).doubleValue());
-                                    evento.setCoordenadaY(Double.valueOf(textoCoordenadaY).doubleValue());
-                                    evento.setRaio(Double.valueOf(textoRaio).doubleValue());
-                                    evento.setIdAdm(userAdm);
-                                    evento.setUrlImagem(url);
-                                    //Envia para função do cadastro
-                                    cadastrar(evento);
-
-
+                                        //Envia para função do cadastro
+                                        cadastrar(evento);
+                                    } else{
+                                        Toast.makeText(CadastrarEventoActivity.this,"Por Favor insira uma imagem",Toast.LENGTH_SHORT).show();
+                                    }
                                 }else{
                                     Toast.makeText(CadastrarEventoActivity.this,"Campo Raio em branco!",Toast.LENGTH_SHORT).show();
                                 }

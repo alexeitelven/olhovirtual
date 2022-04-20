@@ -151,7 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             distancia = util.distEntreCoordenadas(latitudeUsr,longitudeUsr,obj.getCoordenadaX(), obj.getCoordenadaY());
                             //Log.i("Eventos", "Distância Calculada : " + distancia);
-                            if(distancia < 100 ){
+                            if(distancia < 5000 ){ //Raio dos eventos para aparecer na lista de eventos próximos
                                 listaEventosProximos.add(obj);
                             }
 
@@ -183,7 +183,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             .title(evt.getNomeEvento())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                                     break;
-
                                 case 2:
                                     mMap.addMarker(new MarkerOptions()
                                             .position(localEvento)
@@ -244,7 +243,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     5000, //Tempo das atualizações em milisegundos
-                    2, //distÂncia em metros para receber atualizações
+                    1, //distÂncia em metros para receber atualizações
                     locationListener
             );
         }

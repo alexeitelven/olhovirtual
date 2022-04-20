@@ -13,11 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.activity.ListaEventoActivity;
 import com.example.olhovirtual.model.Evento;
 
 import java.util.List;
+import android.text.method.ScrollingMovementMethod;
 
 public class AdapterListaEventos extends RecyclerView.Adapter<AdapterListaEventos.MyViewHolder>{
 
@@ -43,7 +47,7 @@ public class AdapterListaEventos extends RecyclerView.Adapter<AdapterListaEvento
             holder.descricao.setText(evento.getDescricao());
             //holder.imageEvento.setImageResource(R.drawable.logo4);
 
-
+            /*
             Uri uri = Uri.parse( evento.getUrlImagem() );
             if (uri != null){
                 Glide.with(context).load(uri)
@@ -51,6 +55,25 @@ public class AdapterListaEventos extends RecyclerView.Adapter<AdapterListaEvento
             }else{
                 holder.imageEvento.setImageResource(R.drawable.logo4);
             }
+               */
+
+            Uri uri = Uri.parse( evento.getUrlImagem() );
+            if (uri != null){
+                Glide.with(context)
+                        .load(uri)
+                        .transform(
+                                new MultiTransformation(
+                                        new CenterCrop(),
+                                        new RoundedCorners(25)))
+                        .into(holder.imageEvento);
+            }else{
+                holder.imageEvento.setImageResource(R.drawable.logo4);
+
+            }
+
+
+
+
     }
 
     @Override
@@ -64,12 +87,16 @@ public class AdapterListaEventos extends RecyclerView.Adapter<AdapterListaEvento
         TextView tituloEvento;
         TextView descricao;
 
+
+
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageEvento = itemView.findViewById(R.id.imageAdEvento);
             tituloEvento = itemView.findViewById(R.id.textAdTitulo);
             descricao = itemView.findViewById(R.id.textAdDescricao);
             //bordaLayout = itemView.findViewById(R.id.bordaLayout);
+            //descricao.setMovementMethod(new ScrollingMovementMethod());
 
         }
     }
