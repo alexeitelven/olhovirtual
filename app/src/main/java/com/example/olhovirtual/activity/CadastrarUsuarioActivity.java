@@ -112,12 +112,11 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                                 Toast.makeText(CadastrarUsuarioActivity.this,
                                         "Cadastrado com sucesso!",
                                         Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(),ListaEventoActivity.class));
+                                startActivity(new Intent(getApplicationContext(),CameraActivity.class));
                                 finish();
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
-
 
                         }else{
                             progressBar.setVisibility(View.GONE);
@@ -137,7 +136,6 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                             Toast.makeText(CadastrarUsuarioActivity.this,
                                     "Erro: "+ erroExcecao,
                                     Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 }

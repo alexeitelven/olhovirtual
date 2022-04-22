@@ -17,7 +17,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,18 +26,12 @@ import android.widget.AdapterView;
 import com.example.olhovirtual.MapsActivity;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.adapter.AdapterListaEventos;
-import com.example.olhovirtual.databinding.ActivityMainBinding;
 import com.example.olhovirtual.helper.ConfiguracaoFirebase;
 import com.example.olhovirtual.helper.Permissoes;
 import com.example.olhovirtual.helper.RecyclerItemClickListener;
 import com.example.olhovirtual.helper.Util;
 import com.example.olhovirtual.model.Evento;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,7 +41,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ListaEventoActivity extends AppCompatActivity {
 
@@ -79,7 +71,7 @@ public class ListaEventoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_evento);
+        setContentView(R.layout.activity_lista_eventos);
         inicializarComponentes();
 
         //Localização do Usuário
