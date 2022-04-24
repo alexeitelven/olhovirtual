@@ -191,7 +191,7 @@
             android:background="@drawable/background_caixa_texto"
             android:ems="10"
             android:gravity="top"
-            android:hint="Valores"
+            android:hint="Mais informações, valores, etc"
             android:inputType="textMultiLine"
             android:padding="6dp"
             android:textColor="@color/white"

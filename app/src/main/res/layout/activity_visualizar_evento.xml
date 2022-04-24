@@ -90,7 +90,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Valores:"
+                android:text="Mais informações:"
                 android:textColor="@color/azul_claro" />
 
             <TextView

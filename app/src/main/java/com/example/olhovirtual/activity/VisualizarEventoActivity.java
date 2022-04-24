@@ -50,18 +50,8 @@ public class VisualizarEventoActivity extends AppCompatActivity {
             campoDescricao.setText(eventoDestinatario.getDescricao());
             campoHorarioAtendimento.setText(eventoDestinatario.getHorarioAtendimento());
             campoValores.setText(eventoDestinatario.getValores());
-
             String fotoEvento = eventoDestinatario.getUrlImagem();
-            /* ANTIGO
-            if( fotoEvento != null){
-                Uri url = Uri.parse(fotoEvento);
-                Glide.with(VisualizarEventoActivity.this)
-                        .load(url)
-                        .into(imagemEvento);
-            }else{
-                imagemEvento.setImageResource(R.drawable.logo4);
-            }
-            */
+
             if( fotoEvento != null){
                 Uri url = Uri.parse(fotoEvento);
                 Glide.with(VisualizarEventoActivity.this)
