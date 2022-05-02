@@ -17,6 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.olhovirtual.R;
 import com.example.olhovirtual.helper.ConfiguracaoFirebase;
 import com.example.olhovirtual.helper.UsuarioFirebase;
@@ -79,10 +82,15 @@ public class AlterarEventoActivity extends AppCompatActivity {
                 Uri url = Uri.parse(fotoEvento);
                 Glide.with(AlterarEventoActivity.this)
                         .load(url)
+                        .transform(
+                                new MultiTransformation(
+                                        new CenterCrop(),
+                                        new RoundedCorners(25)))
                         .into(imagemEvento);
             }else{
                 imagemEvento.setImageResource(R.drawable.logo4);
             }
+
 
         }
 
@@ -152,7 +160,7 @@ public class AlterarEventoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                botaoAlterarFoto.setVisibility(View.GONE);
+                botaoAlterarCadastro.setVisibility(View.GONE);
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if( i.resolveActivity(getPackageManager()) != null ){
                     startActivityForResult(i, SELECAO_GALERIA);
@@ -218,6 +226,7 @@ public class AlterarEventoActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 url = task.getResult().toString();
+                                eventoDestinatario.setUrlImagem(url);
 
                             }
                         });

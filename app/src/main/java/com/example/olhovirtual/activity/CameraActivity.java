@@ -279,7 +279,7 @@ public class CameraActivity extends BaseActivity {
                                 //Log.i("Eventos", "calculando distancia" );
                                 distancia = util.distEntreCoordenadas(latitudeUsr, longitudeUsr, evento.getCoordenadaX(), evento.getCoordenadaY());
                                 Log.i("Eventos", "Distância Calculada : " + distancia);
-                                if (distancia < 8) { // DISTANCIA EM METROS usar oobj.getRaio()?
+                                if (distancia <= evento.getRaio()) { // DISTANCIA EM METROS usar oobj.getRaio()?
                                     progressBar.setVisibility(View.GONE);
                                     // Referencia do evento para tela de comentarios
                                     IdEventoREF = evento.getId();
