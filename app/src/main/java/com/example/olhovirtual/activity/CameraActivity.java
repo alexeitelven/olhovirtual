@@ -353,8 +353,9 @@ public class CameraActivity extends BaseActivity {
         fabComentarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ComentariosActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ComentariosRAActivity.class);
                 intent.putExtra("idEvento",IdEventoREF);
+                intent.putExtra("nomeEvento",textTitulo.getText());
                 intent.putExtra("Activity","cameraActivity");
                 startActivity(intent);
                 finish();
